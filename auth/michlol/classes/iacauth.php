@@ -1,5 +1,11 @@
 <?php
 
+
+/**
+ * Authenticate with IAC servers
+ * This authentication method uses HTTP POST
+ * to handle the request to the server
+ */
 class IACAuth {
 
     const IACPath = 'api/v1/general/moodle_auth';
@@ -10,6 +16,14 @@ class IACAuth {
     private $apiMis;
     private $apiPass;
 
+    /**
+     * 
+     * Constructor.
+     * @param string $url = Server url (e.g. https://server.iac.ac.il/).
+     * @param int $delayTime = time to wait for server response.
+     * @param string $apiMis = Michlol mis of API user (e.g. user MICHAPI has mis of 90 ).
+     * @param string $apiPass = Michlol password of API user .
+     */
     public function __construct($url, $delayTime, $apiMis, $apiPass ) {
 
         $this->delayTime = $delayTime;
@@ -19,8 +33,17 @@ class IACAuth {
 
     }
 
+    /**
+     * 
+     * function to authenticate inputted credentials.
+     * 
+     * @param string $username = Username requesting to login
+     * @param int $password = Password of user requesting to login.
+     * @return bool Authentication success or failure.
+     */
     public function user_login($username, $password) {
 
+        // Call authentication server
         $IACAuth = $this->verifyIAC($username,$password);
         if ($IACAuth)
             {
@@ -30,6 +53,15 @@ class IACAuth {
 
     }
 
+
+    /**
+     * 
+     * Call authentication server using POST request.
+     * 
+     * @param string $username = Username requesting to login
+     * @param int $password = Password of user requesting to login.
+     * @return bool Authentication success or failure.
+     */
     private function verifyIAC($username,$password)
     {
 	$returnVal = false;
@@ -41,7 +73,7 @@ class IACAuth {
             // Initialize cURL session
             $ch = curl_init($url);
 
-            // Prepare POST fields
+            // Prepare POST body
             $postFields = array(
                 'username' => $username,
                 'password' => $password,
@@ -49,7 +81,9 @@ class IACAuth {
                 'host_pass' => $this->apiPass
             );
 
+            // Encode $postFields into a JSON string
             $postJson = json_encode($postFields);
+
             try
             {
                 // Get delay time in base 10

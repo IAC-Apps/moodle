@@ -1,5 +1,11 @@
 <?php
 
+
+/**
+ * Authenticate with Michlol WsM3API endpoint.
+ * This authentication method uses SOAP1.2 
+ * to handle the request to the server
+ */
 class MichlolAuth {
 
     const michlolPath = 'WsM3Api/MichlolApi.asmx?WSDL';
@@ -7,12 +13,20 @@ class MichlolAuth {
     private $api_login;
     private $api_password;
     
-    // Constructor function for MichlolAuth
+    /**
+     * 
+     * Constructor.
+     * @param string $url = Server url (e.g. https://my.iac.ac.il/).
+     * @param string $api_login = Michlol first name of API user (e.g. MICHAPI).
+     * @param string $api_password = Michlol password of API user .
+     */
     public function __construct($url, $api_login, $api_password) {
 
         $this->api_login = $api_login;
         $this->api_password = $api_password;
         //error_reporting(E_ALL ^ E_WARNING ^ E_NOTICE);
+
+        // Prepare post request
         $this->client = new SoapClient($url.self::michlolPath,
             array(
                 'exceptions' => true,
@@ -24,6 +38,14 @@ class MichlolAuth {
             ));
     }
 
+    /**
+     * 
+     * function to authenticate inputted credentials.
+     * 
+     * @param string $username = Username requesting to login
+     * @param int $password = Password of user requesting to login.
+     * @return bool Authentication success or failure.
+     */
     public function user_login($username, $password) {
         global $CFG;
 
@@ -40,6 +62,7 @@ class MichlolAuth {
 
     public function auth($xml,$username) {
 
+        // Create Request body.
         $param = array(
             'P_RequestParams' => array(
                 'RequestID' => 111,
@@ -50,23 +73,33 @@ class MichlolAuth {
                 'Password' => $this->api_password, // Michlol USR password taken from settings
             ));
         
-        // send SOAP request
+        // send SOAP request.
         $result = $this->client->ProcessRequest($param);
 
+        // Check if input isn't empty.
         if (empty($result->ProcessRequestResult->OutputData)) {
             return false;
         }
 
+        // Convert XML string to a SimpleXMLElement object.
         $xml_result = new SimpleXMLElement($result->ProcessRequestResult->OutputData);
-
+        
+        // Check if authentication was successfull.
         if (($xml_result->RECORD->LOGIN_RESULT == 10) && (!strcmp($xml_result->RECORD->LOGIN_USERNAMENAME,$username))){
-	  //        if ($xml_result->RECORD->LOGIN_RESULT == 10) {
             return true;
         } else {
             return false;
         }
     }
 
+    /**
+     * 
+     * Create XML request for student.
+     * 
+     * @param string $username = Username requesting to login
+     * @param int $password = Password of user requesting to login.
+     * @return string XML request body to send out.
+     */
     public function studentXML($username, $password) {
         return <<<EOXML
 <?xml version="1.0" encoding="utf-8" ?>
@@ -83,7 +116,14 @@ class MichlolAuth {
 EOXML;
     }
 
-
+    /**
+     * 
+     * Create XML request for teacher/lecturer.
+     * 
+     * @param string $username = Username requesting to login
+     * @param int $password = Password of user requesting to login.
+     * @return string XML request body to send out.
+     */
     public function teacherXML($username, $password) {
         return <<<EOXML
 <?xml version="1.0" encoding="utf-8" ?>

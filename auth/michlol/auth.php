@@ -29,14 +29,14 @@ class auth_plugin_michlol extends auth_plugin_base {
 
 
     /**
-     * The name of the component. Used by the configuration.
+     * The name of the component, 
+     * used to request admin settings.
      */
     const COMPONENT_NAME = 'auth_michlol';
     /**
      * 
      * Constructor.
      */
-    /*function auth_plugin_rashim() {*/
       function __construct(){
         $this->authtype = 'michlol';
         $this->config =  get_config(self::COMPONENT_NAME);
@@ -100,6 +100,7 @@ class auth_plugin_michlol extends auth_plugin_base {
             // TODO: write exception to log
         }
 
+        // Try authenticating with WsM3API
         if ($useMichAPI === "1")
         {
             $michlol = new MichlolAuth($this->config->auth_michlol_addres_key, $apiLogin, $apiPass);
