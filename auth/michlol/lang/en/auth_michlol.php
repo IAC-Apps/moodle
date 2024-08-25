@@ -19,7 +19,10 @@ $string['use_michlol'] = 'Enable michlol Auth';
 
 $string['auth_michlol_server_settings'] = 'Michlol auth settings';
 $string['auth_michlol_address_key'] = 'Michlol server';
-$string['auth_michlol_address'] = "The address of Michlol's web server (example: https://michlol-api/).";
+$string['auth_michlol_address'] = "The address of Michlol's web server (example: michlol-api-server.com or 192.168.1.20).";
+
+$string['auth_https_str'] = 'Use HTTPS';
+$string['auth_https_desc'] = 'Use HTTPS for server communication';
 
 
 $string['auth_michlol_debug_key'] = "Active debug";
@@ -42,11 +45,12 @@ $string['auth_michlol_password_desc'] = 'Michlol password to authenticate with';
 $string['iac_michlol'] = 'Ramat Gan Academic College(IAC) Authentication';
 $string['iac_michlol_desc'] = 'Ramat Gan Academic College(IAC) Authentication settings';
 
+
 $string['auth_iac_delay_str'] = 'POST delay';
 $string['auth_iac_delay_desc'] = 'Seconds to wait for response from server';
 
 $string['auth_iac_address_str'] = 'Server Address';
-$string['auth_iac_address_desc'] = 'Address of authentication server (example: https://authen-serv.co.il/)';
+$string['auth_iac_address_desc'] = 'Address of authentication server (example: authen-serv.co.il or 192.168.1.20)';
 
 $string['yes'] = 'Yes';
 $string['no'] = 'No';

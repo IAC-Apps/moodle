@@ -56,17 +56,36 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configpasswordunmask('auth_michlol/auth_michlol_password',
             get_string('auth_michlol_password', 'auth_michlol'),
             get_string('auth_michlol_password_desc', 'auth_michlol'), ''));
+
+
+    $MichlolUseHTTPS = array(
+        FALSE => get_string('no','auth_michlol'),
+        TRUE => get_string('yes','auth_michlol'),
+    );
+    // Setting to use HTTPS on Michlol verification
+    $settings->add(new admin_setting_configselect('auth_michlol/auth_michlol_https',
+        new lang_string('auth_https_str', 'auth_michlol'),
+        new lang_string('auth_https_desc', 'auth_michlol'), 1, $MichlolUseHTTPS));
     
     // Michlol server address
     $settings->add(new admin_setting_configtext('auth_michlol/auth_michlol_addres_key', get_string('auth_michlol_address_key', 'auth_michlol'),
-                    get_string('auth_michlol_address', 'auth_michlol'), '', PARAM_RAW_TRIMMED));
+                    get_string('auth_michlol_address', 'auth_michlol'), 'aws-michlol-web', PARAM_RAW_TRIMMED));
 
     /********** Ramat Gan Academic College(IAC) Authentication **********/ 
     $settings->add(new admin_setting_heading('auth_michlol/iac_auth', 
     new lang_string('iac_michlol','auth_michlol'),
     new lang_string('iac_michlol_desc', 'auth_michlol')));
 
-    // Delay time
+    $IACUseHTTPS = array(
+        FALSE => get_string('no','auth_michlol'),
+        TRUE => get_string('yes','auth_michlol'),
+    );
+    // Setting to use HTTPS on IAC verification
+    $settings->add(new admin_setting_configselect('auth_michlol/auth_iac_https',
+        new lang_string('auth_https_str', 'auth_michlol'),
+        new lang_string('auth_https_desc', 'auth_michlol'), 1, $IACUseHTTPS));
+
+    // POST delay time
     $settings->add(new admin_setting_configtext('auth_michlol/auth_iac_delay', 
     get_string('auth_iac_delay_str', 'auth_michlol'),
         get_string('auth_iac_delay_desc', 'auth_michlol'), 10, PARAM_INT ));
@@ -74,7 +93,7 @@ if ($ADMIN->fulltree) {
     // IAC server address
     $settings->add(new admin_setting_configtext('auth_michlol/auth_iac_address',
      get_string('auth_iac_address_str', 'auth_michlol'),
-        get_string('auth_iac_address_desc', 'auth_michlol'), 'https://server.iac.ac.il/', PARAM_RAW_TRIMMED));
+        get_string('auth_iac_address_desc', 'auth_michlol'), 'server.iac.ac.il', PARAM_RAW_TRIMMED));
     
     // LOG settings ( don't do anything yet? )
     // $options = array(0 => get_string('no'), 1 => get_string('yes'));

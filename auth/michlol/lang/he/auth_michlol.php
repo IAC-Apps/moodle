@@ -10,6 +10,9 @@
 $string['auth_michloldescription'] = 'הזדהות מודל מול מכלול';
 $string['pluginname'] = 'מכלול';
 
+$string['auth_https_str'] = 'שימוש ב-HTTPS';
+$string['auth_https_desc'] = 'אימות מול השרת יתבצע באמצעות פרוטוקול HTTPS';
+
 
 
 $string['auth_michlol_server_settings'] = 'הגדרות אימות - מכלול';

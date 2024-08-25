@@ -20,14 +20,24 @@ class MichlolAuth {
      * @param string $api_login = Michlol first name of API user (e.g. MICHAPI).
      * @param string $api_password = Michlol password of API user .
      */
-    public function __construct($url, $api_login, $api_password) {
+    public function __construct($url, $api_login, $api_password,$use_https) {
 
         $this->api_login = $api_login;
         $this->api_password = $api_password;
         //error_reporting(E_ALL ^ E_WARNING ^ E_NOTICE);
 
+        if ($use_https === "1")
+        {
+            $full_url = "https://".$url.'/'.self::michlolPath;
+        }
+        else
+        {
+            $full_url = "http://".$url.'/'.self::michlolPath;
+        }
+
         // Prepare post request
-        $this->client = new SoapClient($url.self::michlolPath,
+
+        $this->client = new SoapClient($full_url,
             array(
                 'exceptions' => true,
                 'trace' => true,

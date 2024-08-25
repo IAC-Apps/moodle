@@ -89,7 +89,8 @@ class auth_plugin_michlol extends auth_plugin_base {
         {
             $iacUrl = $this->config->auth_iac_address;
             $delayTime = $this->config->auth_iac_delay;
-            $IAC = new IACAuth($iacUrl,$delayTime,$apiMis,$apiPass );
+            $ias_use_https = $this->config->auth_iac_https;
+            $IAC = new IACAuth($iacUrl,$delayTime,$apiMis,$apiPass, $ias_use_https);
             if ($IAC->user_login(stripslashes($username), stripslashes($password))) 
             {
                 return TRUE;
@@ -103,7 +104,8 @@ class auth_plugin_michlol extends auth_plugin_base {
         // Try authenticating with WsM3API
         if ($useMichAPI === "1")
         {
-            $michlol = new MichlolAuth($this->config->auth_michlol_addres_key, $apiLogin, $apiPass);
+            $mich_use_https = $this->config->auth_michlol_https;
+            $michlol = new MichlolAuth($this->config->auth_michlol_addres_key, $apiLogin, $apiPass, $mich_use_https);
 
             if ($michlol->user_login(stripslashes($username), stripslashes($password))) 
             {

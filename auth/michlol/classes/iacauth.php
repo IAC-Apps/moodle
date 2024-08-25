@@ -10,7 +10,7 @@ class IACAuth {
 
     const IACPath = 'api/v1/general/moodle_auth';
     private $client;
-    private $fullUrl;
+    private $full_url;
     private $delayTime;
 
     private $apiMis;
@@ -24,12 +24,23 @@ class IACAuth {
      * @param string $apiMis = Michlol mis of API user (e.g. user MICHAPI has mis of 90 ).
      * @param string $apiPass = Michlol password of API user .
      */
-    public function __construct($url, $delayTime, $apiMis, $apiPass ) {
+    public function __construct($url, $delayTime, $apiMis, $apiPass, $use_https ) {
 
         $this->delayTime = $delayTime;
-        $this->fullUrl = $url.self::IACPath;
         $this->apiMis = $apiMis;
         $this->apiPass = $apiPass;
+
+        if ($use_https === "1")
+        {
+            $this->full_url = "https://".$url.'/'.self::IACPath;
+        }
+        else
+        {
+            $this->full_url = "http://".$url.'/'.self::IACPath;
+        }
+
+
+
 
     }
 
@@ -67,8 +78,9 @@ class IACAuth {
 	$returnVal = false;
         try
         {
+            
             // Endpoint URL
-            $url = $this->fullUrl;
+            $url = $this->full_url;
 
             // Initialize cURL session
             $ch = curl_init($url);
