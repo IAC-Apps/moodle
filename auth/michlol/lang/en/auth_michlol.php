@@ -9,13 +9,14 @@
  */
 
 $string['auth_michloldescription'] = 'Michlol';
+
+$string['use_michlol'] = 'Enable michlol Auth';
 $string['use_michlol_desc'] = 'Enables authentication from WSM3API endpoint in Michlol Web';
+
 $string['pluginname'] = 'Michlol Authentication';
 $string['legacy_michlol'] = 'Legacy michlol Authentication Settings';
 $string['legacy_michlol_desc'] = 'Settings for legacy michlol authentication';
 
-
-$string['use_michlol'] = 'Enable michlol Auth';
 
 $string['auth_michlol_server_settings'] = 'Michlol auth settings';
 $string['auth_michlol_address_key'] = 'Michlol server';
